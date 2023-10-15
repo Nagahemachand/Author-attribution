@@ -118,6 +118,7 @@ def train_model(model_name, n, file_name, train):
 
 ## ngram size
 ngram_n = 2
+print(f"ngram_n: {ngram_n}")
 
 print("training LMs...(this may take a while) ")
 models = {}
@@ -160,7 +161,8 @@ def test_file(train, test):
         # print(perplexities)
         pred_file_name = min(perplexities, key=perplexities.get)
         pred_author = author_name(pred_file_name) # .capitalize()
-        print(f"{sent}: {pred_author}")
+        print(f"{sent}: {pred_author}", end="\n")
+        #print(f"perplexity: {min(perplexities.values())}")
 
 
 ModelEntry_PostTraining = True

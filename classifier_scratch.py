@@ -92,7 +92,7 @@ def train_model(model_name, n, file_name, train):
         ngram_counts[ngram] = ngram_counts.get(ngram, 0) + 1
     total_ngrams = len(ngrams)  # Calculate total_ngrams
 
-    if model_name.upper() == "MLE":
+    if model_name.upper() == "LIDSTONE":
         model = ngram_counts
     else:
         raise Exception("Wrong model name")
@@ -105,7 +105,7 @@ print("training LMs...(this may take a while) ")
 models = {}
 total_ngrams = 0  # Initialize total_ngrams
 for file_name in train.keys():
-    model, ngrams = train_model("MLE", ngram_n, file_name, train)  # Get model and total_ngrams
+    model, ngrams = train_model("LIDSTONE", ngram_n, file_name, train)  # Get model and total_ngrams
     models[file_name] = model
     total_ngrams += ngrams  # Update total_ngrams
 
