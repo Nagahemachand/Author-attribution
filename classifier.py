@@ -126,6 +126,7 @@ for file_name in train.keys():
     ## args.test has already been filtered
     models[file_name] = train_model("LIDSTONE", ngram_n, file_name, train)
 
+
 def development(train, test):
     for file_name in test.keys():
         correct, total = 0, 0
@@ -150,6 +151,8 @@ def development(train, test):
         accuracy = correct / total
         print(author_name(file_name) + f"\t{accuracy*100:.1f}%" + " correct")
 
+    ####--------------#########---------########
+
 def test_file(train, test):
 
     for sent in test[args.test]:
@@ -171,5 +174,165 @@ if ModelEntry_PostTraining:
         test_file(train, test)
     else:
         development(train, test)
+        # for i in range(10,35, 5):
+        #     Lidstone_models = {}
+        #     Lidstone_models = models[file_name] = train_model("LIDSTONE", ngram_n, file_name, train)
+        #     print(f"Austen: {Lidstone_models['austen'].generate(10, random_seed=i)} ")
+        #     StupidBackoff_models = {}
+        #     StupidBackoff_models = train_model("SB", ngram_n, file_name, train)
+        #     print(f"Dickens: {StupidBackoff_models['dickens'].generate(10, random_seed=i)}")
+        #     print(f"Tolstoy: {StupidBackoff_models['tolstoy'].generate(10, random_seed=i)}")
+        #     MLE_models = {}
+        #     MLE_models = train_model("MLE", ngram_n, file_name, train)
+        #     print(f"Wilde: {MLE_models['wilde'].generate(10, random_seed=i)}")
 else:
     print("Nothing")
+
+
+####---------------###############--------------############
+models1 = {}
+models2 = {}
+models3 = {}
+models4 = {}
+
+file_name1 = 'austen.txt'
+file_name2 = 'dickens.txt'
+file_name3 = 'tolstoy.txt'
+file_name4 = 'wilde.txt'
+
+print("Text generation for Austin:-----------------------------------------")
+#Text generation for Austin:
+num_samples = 5
+for random_seed in range(num_samples):
+    models1[file_name1] = train_model("LIDSTONE", ngram_n, file_name1, train)
+    Lidstone_models = models1[file_name1]
+    generated_text = Lidstone_models.generate(10, random_seed=random_seed)
+    test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+    ppxt = models[file_name1].perplexity(test_ngrams_p)
+    print(f"{author_name(file_name1)}:: model is Lidstone:: Sample-{random_seed+1} :: {generated_text}:: Perplexity score: {ppxt}")
+
+# for random_seed in range(num_samples):
+#     models2[file_name1] = train_model("MLE", ngram_n, file_name1, train)
+#     MLE_models = models2[file_name1]
+#     generated_text = MLE_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name1].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name1)}:: model is MLE:: {generated_text}:: Perplexity score: {ppxt}")
+
+# for random_seed in range(num_samples):
+#     models3[file_name1] = train_model("SB", ngram_n, file_name1, train)
+#     SB_models = models3[file_name1]
+#     generated_text = SB_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name1].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name1)}:: model is StupidBackoff:: {generated_text}:: Perplexity score: {ppxt}")
+
+# for random_seed in range(num_samples):
+#     models4[file_name1] = train_model("WBI", ngram_n, file_name1, train)
+#     WBI_models = models4[file_name1]
+#     generated_text = WBI_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name1].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name1)}:: model is WittenBellInterpolated:: {generated_text}:: Perplexity score: {ppxt}")
+
+print("Text generation for Dickens:-----------------------------------------")
+#Text generation for Dickens:
+# for random_seed in range(num_samples):
+#     models1[file_name2] = train_model("LIDSTONE", ngram_n, file_name2, train)
+#     Lidstone_models = models1[file_name2]
+#     generated_text = Lidstone_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name2].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name2)}:: model is Lidstone:: {generated_text}:: Perplexity score: {ppxt}")
+
+for random_seed in range(num_samples):
+    models2[file_name2] = train_model("MLE", ngram_n, file_name2, train)
+    MLE_models = models2[file_name2]
+    generated_text = MLE_models.generate(10, random_seed=random_seed)
+    test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+    ppxt = models[file_name2].perplexity(test_ngrams_p)
+    print(f"{author_name(file_name2)}:: model is MLE::  Sample-{random_seed+1} ::{generated_text}:: Perplexity score: {ppxt}")
+
+# for random_seed in range(num_samples):
+#     models3[file_name2] = train_model("SB", ngram_n, file_name2, train)
+#     SB_models = models3[file_name2]
+#     generated_text = SB_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name2].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name2)}:: model is StupidBackoff:: {generated_text}:: Perplexity score: {ppxt}")
+
+# for random_seed in range(num_samples):
+#     models4[file_name2] = train_model("WBI", ngram_n, file_name2, train)
+#     WBI_models = models4[file_name2]
+#     generated_text = WBI_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name2].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name2)}:: model is WittenBellInterpolated:: {generated_text}:: Perplexity score: {ppxt}")
+
+print("Text generation for Tolstoy:-----------------------------------------")
+#Text generation for Tolstoy:
+# for random_seed in range(num_samples):
+#     models1[file_name3] = train_model("LIDSTONE", ngram_n, file_name3, train)
+#     Lidstone_models = models1[file_name3]
+#     generated_text = Lidstone_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name3].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name3)}:: model is Lidstone:: {generated_text}:: Perplexity score: {ppxt}")
+
+# for random_seed in range(num_samples):
+#     models2[file_name3] = train_model("MLE", ngram_n, file_name3, train)
+#     MLE_models = models2[file_name3]
+#     generated_text = MLE_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name3].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name3)}:: model is MLE:: {generated_text}:: Perplexity score: {ppxt}")
+
+for random_seed in range(num_samples):
+    models3[file_name3] = train_model("SB", ngram_n, file_name3, train)
+    SB_models = models3[file_name3]
+    generated_text = SB_models.generate(10, random_seed=random_seed)
+    test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+    ppxt = models[file_name3].perplexity(test_ngrams_p)
+    print(f"{author_name(file_name3)}:: model is StupidBackoff:: Sample-{random_seed+1} ::{generated_text}:: Perplexity score: {ppxt}")
+
+# for random_seed in range(num_samples):
+#     models4[file_name3] = train_model("WBI", ngram_n, file_name3, train)
+#     WBI_models = models4[file_name3]
+#     generated_text = WBI_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name3].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name3)}:: model is WittenBellInterpolated:: {generated_text}:: Perplexity score: {ppxt}")
+
+print("Text generation for Wilde:-----------------------------------------")
+#Text generation for Wilde:
+# for random_seed in range(num_samples):
+#     models1[file_name4] = train_model("LIDSTONE", ngram_n, file_name4, train)
+#     Lidstone_models = models1[file_name4]
+#     generated_text = Lidstone_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name4].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name4)}:: model is Lidstone:: {generated_text}:: Perplexity score: {ppxt}")
+
+# for random_seed in range(num_samples):
+#     models2[file_name4] = train_model("MLE", ngram_n, file_name4, train)
+#     MLE_models = models2[file_name4]
+#     generated_text = MLE_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name4].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name4)}:: model is MLE:: {generated_text}:: Perplexity score: {ppxt}")
+
+# for random_seed in range(num_samples):
+#     models3[file_name4] = train_model("SB", ngram_n, file_name4, train)
+#     SB_models = models3[file_name4]
+#     generated_text = SB_models.generate(10, random_seed=random_seed)
+#     test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+#     ppxt = models[file_name4].perplexity(test_ngrams_p)
+#     print(f"{author_name(file_name4)}:: model is StupidBackoff:: {generated_text}:: Perplexity score: {ppxt}")
+
+for random_seed in range(num_samples):
+    models4[file_name4] = train_model("WBI", ngram_n, file_name4, train)
+    WBI_models = models4[file_name4]
+    generated_text = WBI_models.generate(10, random_seed=random_seed)
+    test_ngrams_p = list(ngrams(pad_both_ends(generated_text, n=ngram_n), n=ngram_n))
+    ppxt = models[file_name4].perplexity(test_ngrams_p)
+    print(f"{author_name(file_name4)}:: model is WittenBellInterpolated::  Sample-{random_seed+1} :: {generated_text}:: Perplexity score: {ppxt}")
